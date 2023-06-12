@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const { validateMovie, validateUser } = require("./validator.js");
+const { hassPassword } = require("./auth.js");
 
 const app = express();
 
@@ -30,9 +31,9 @@ const userHandlers = require("./userHandlers");
 app.get("/api/users", userHandlers.getUsers);
 app.get("/api/users/:id", userHandlers.getUserById);
 
-app.post("/api/users", validateUser, userHandlers.postUser);
+app.post("/api/users", validateUser, hassPassword, userHandlers.postUser);
 
-app.put("/api/users/:id", validateUser, userHandlers.updateUser);
+app.put("/api/users/:id", validateUser, hassPassword, userHandlers.updateUser);
 
 app.delete("/api/users/:id", userHandlers.deleteUser);
 
